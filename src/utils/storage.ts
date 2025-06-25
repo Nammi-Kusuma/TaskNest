@@ -67,7 +67,8 @@ export const storage = {
         { id: '1', name: 'Kusuma', email: 'kusuma@example.com' },
         { id: '2', name: 'Jahnavi', email: 'jahnavi@example.com' },
         { id: '3', name: 'Faiz', email: 'faiz@example.com' },
-        { id: '4', name: 'Sandhya', email: 'sandhya@example.com' }
+        { id: '4', name: 'Shiva', email: 'shiva@example.com' },
+        { id: '5', name: 'Sandhya', email: 'sandhya@example.com' }
       ];
 
       const currentUser = sampleUsers[0];
@@ -128,7 +129,7 @@ export const storage = {
           boardId: '1',
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          order: 0
+          order: 0,
         },
         {
           id: '2',
@@ -144,7 +145,7 @@ export const storage = {
           boardId: '1',
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          order: 0
+          order: 0,
         },
         {
           id: '3',
@@ -160,7 +161,7 @@ export const storage = {
           boardId: '2',
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          order: 0
+          order: 0,
         }
       ];
 

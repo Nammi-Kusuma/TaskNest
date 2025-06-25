@@ -24,6 +24,25 @@ export interface Task {
   order: number;
 }
 
+export interface Attachment {
+  id: string;
+  taskId: string;
+  fileName: string;
+  url: string;
+  fileType: string;
+  uploadedAt: string;
+  uploadedBy: string;
+}
+
+export interface Comment {
+  id: string;
+  taskId: string;
+  userId: string;
+  userName: string;
+  content: string;
+  createdAt: string;
+}
+
 export interface Column {
   id: string;
   title: string;
