@@ -35,41 +35,46 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete, onCl
       onDragStart={handleDragStart}
       onClick={() => onClick(task)}
       className={`
-        bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-3 cursor-pointer
-        hover:shadow-md transition-all duration-200 hover:border-gray-300
+        group bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-3 cursor-pointer
+        hover:shadow-lg hover:border-gray-300 transition-all duration-300
+        hover:bg-gray-50
         ${isDragging ? 'opacity-50 rotate-2 scale-105' : ''}
       `}
     >
       {/* Priority Indicator */}
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-2">
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-center gap-3">
           <div className={`w-3 h-3 rounded-full ${getPriorityBadgeColor(task.priority)}`} />
-          <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+          <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">
             {task.priority}
           </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <User className="w-4 h-4 text-gray-400" />
+          <span className="text-xs text-gray-400">{task.assignedUserName || 'Unassigned'}</span>
         </div>
       </div>
 
       {/* Title */}
-      <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+      <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
         {task.title}
       </h3>
 
       {/* Description */}
       {task.description && (
-        <p className="text-gray-600 text-sm mb-3 line-clamp-3">
+        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
           {task.description}
         </p>
       )}
 
       {/* Due Date */}
-      <div className={`flex items-center gap-2 p-2 rounded-md border mb-3 ${dueDateBgColor()}`}>
+      <div className={`flex items-center gap-3 p-3 rounded-lg ${dueDateBgColor()} mb-4`}>
         {isOverdue(task.dueDate) ? (
-          <AlertCircle className="w-4 h-4 text-red-600" />
+          <AlertCircle className="w-5 h-5 text-red-600" />
         ) : isDueToday(task.dueDate) ? (
-          <Clock className="w-4 h-4 text-orange-600" />
+          <Clock className="w-5 h-5 text-orange-600" />
         ) : (
-          <Calendar className="w-4 h-4 text-gray-600" />
+          <Calendar className="w-5 h-5 text-gray-600" />
         )}
         <span className={`text-sm font-medium ${dueDateColor()}`}>
           {formatDate(task.dueDate)}
@@ -79,14 +84,11 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete, onCl
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between text-xs text-gray-500">
-        {/* Assigned User */}
-        <div className="flex items-center gap-1">
-          <User className="w-3 h-3" />
-          <span>{task.assignedUserName || 'Unassigned'}</span>
+      <div className="flex items-center justify-between text-xs text-gray-400">
+        <div className="flex items-center gap-2">
+          {/* <User className="w-4 h-4 text-gray-400" />
+          <span>{task.creatorName}</span> */}
         </div>
-
-        {/* Creator */}
         <div className="text-right">
           <span>by {task.creatorName}</span>
         </div>
