@@ -64,10 +64,10 @@ export const storage = {
     const existingBoards = storage.getBoards();
     if (existingBoards.length === 0) {
       const sampleUsers: User[] = [
-        { id: '1', name: 'John Doe', email: 'john@example.com' },
-        { id: '2', name: 'Jane Smith', email: 'jane@example.com' },
-        { id: '3', name: 'Mike Johnson', email: 'mike@example.com' },
-        { id: '4', name: 'Sarah Wilson', email: 'sarah@example.com' }
+        { id: '1', name: 'Kusuma', email: 'kusuma@example.com' },
+        { id: '2', name: 'Jahnavi', email: 'jahnavi@example.com' },
+        { id: '3', name: 'Faiz', email: 'faiz@example.com' },
+        { id: '4', name: 'Sandhya', email: 'sandhya@example.com' }
       ];
 
       const currentUser = sampleUsers[0];
@@ -123,7 +123,7 @@ export const storage = {
           priority: 'high',
           dueDate: tomorrow.toISOString().split('T')[0],
           assignedUserId: '2',
-          assignedUserName: 'Jane Smith',
+          assignedUserName: 'Jahnavi',
           columnId: '1',
           boardId: '1',
           createdAt: new Date().toISOString(),
@@ -139,7 +139,7 @@ export const storage = {
           priority: 'medium',
           dueDate: nextWeek.toISOString().split('T')[0],
           assignedUserId: '3',
-          assignedUserName: 'Mike Johnson',
+          assignedUserName: 'Faiz',
           columnId: '2',
           boardId: '1',
           createdAt: new Date().toISOString(),
@@ -155,7 +155,7 @@ export const storage = {
           priority: 'high',
           dueDate: new Date().toISOString().split('T')[0],
           assignedUserId: '4',
-          assignedUserName: 'Sarah Wilson',
+          assignedUserName: 'Shiva',
           columnId: '5',
           boardId: '2',
           createdAt: new Date().toISOString(),
