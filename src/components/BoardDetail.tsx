@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Plus } from 'lucide-react';
 import { Board, Column, Task, User, CreateTaskData, CreateColumnData } from '../types';
 import { ColumnComponent } from './ColumnComponent';
@@ -48,6 +48,30 @@ export const BoardDetail: React.FC<BoardDetailProps> = ({
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [editingColumn, setEditingColumn] = useState<Column | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [columnsPerPage, setColumnsPerPage] = useState(4);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setColumnsPerPage(2);
+      } else if (width < 1024) {
+        setColumnsPerPage(3);
+      } else {
+        setColumnsPerPage(4);
+      }
+    };
+
+    handleResize(); // Initial call
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const totalPages = Math.ceil(columns.length / columnsPerPage);
+  const indexOfLastColumn = currentPage * columnsPerPage;
+  const indexOfFirstColumn = indexOfLastColumn - columnsPerPage;
+  const currentColumns = columns.slice(indexOfFirstColumn, indexOfLastColumn);
 
   const handleCreateTask = (columnId: string) => {
     setSelectedColumnId(columnId);
@@ -139,39 +163,67 @@ export const BoardDetail: React.FC<BoardDetailProps> = ({
 
       {/* Board Content */}
       <div className="p-6">
-        <div className="flex gap-6 overflow-x-auto pb-6">
-          {columns.map((column) => (
-            <ColumnComponent
-              key={column.id}
-              column={column}
-              tasks={getTasksByColumnId(column.id)}
-              onCreateTask={handleCreateTask}
-              onEditTask={handleEditTask}
-              onTaskClick={handleTaskClick}
-              onDeleteTask={onDeleteTask}
-              onEditColumn={handleEditColumn}
-              onDeleteColumn={onDeleteColumn}
-              onDropTask={handleDropTask}
-            />
-          ))}
-          
-          {columns.length === 0 && (
-            <div className="flex-1 flex items-center justify-center py-12">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                  <Plus className="w-8 h-8 text-gray-400" />
+        <div className="flex flex-col gap-6">
+          <div className="relative">
+            {/* Left Arrow */}
+            {currentPage > 1 && (
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                className="absolute left-0 top-1/2 -translate-y-1/2 p-3 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors border-2 border-gray-200"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
+
+            {/* Right Arrow */}
+            {currentPage < totalPages && (
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                className="absolute right-0 top-1/2 -translate-y-1/2 p-3 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors border-2 border-gray-200"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
+
+            <div className="flex gap-6 flex-wrap justify-center">
+              {currentColumns.map((column) => (
+                <ColumnComponent
+                  key={column.id}
+                  column={column}
+                  tasks={getTasksByColumnId(column.id)}
+                  onCreateTask={handleCreateTask}
+                  onEditTask={handleEditTask}
+                  onTaskClick={handleTaskClick}
+                  onDeleteTask={onDeleteTask}
+                  onEditColumn={handleEditColumn}
+                  onDeleteColumn={onDeleteColumn}
+                  onDropTask={handleDropTask}
+                />
+              ))}
+              
+              {currentColumns.length === 0 && (
+                <div className="flex-1 flex items-center justify-center py-12">
+                  <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                      <Plus className="w-8 h-8 text-gray-400" />
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">No columns yet</h3>
+                    <p className="text-gray-600 mb-4">Add your first column to get started</p>
+                    <button
+                      onClick={() => setShowColumnModal(true)}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      Add Column
+                    </button>
+                  </div>
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No columns yet</h3>
-                <p className="text-gray-600 mb-4">Add your first column to get started</p>
-                <button
-                  onClick={() => setShowColumnModal(true)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Add Column
-                </button>
-              </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
 
