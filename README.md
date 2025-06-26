@@ -2,6 +2,8 @@
 
 [![Live Demo](https://img.shields.io/badge/demo-online-brightgreen)](https://kusuma-tasknet.netlify.app/)
 
+[Live Demo](https://kusuma-tasknet.netlify.app/) | [GitHub Repository](https://github.com/Nammi-Kusuma/TaskNest)
+
 A modern task management application built with React and TypeScript, featuring both board-based task management and comprehensive dashboard views for managers and employees.
 
 ## Features
@@ -48,8 +50,8 @@ A modern task management application built with React and TypeScript, featuring 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/tasknest.git
-cd tasknest
+git clone https://github.com/Nammi-Kusuma/TaskNest.git
+cd TaskNest
 ```
 
 2. Install dependencies:
