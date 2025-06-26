@@ -1,5 +1,7 @@
 # TaskNest
 
+[![Live Demo](https://img.shields.io/badge/demo-online-brightgreen)](https://kusuma-tasknet.netlify.app/)
+
 A modern task management application built with React and TypeScript, featuring both board-based task management and comprehensive dashboard views for managers and employees.
 
 ## Features
