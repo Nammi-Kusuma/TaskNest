@@ -71,10 +71,10 @@ export const BoardView: React.FC<BoardViewProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">TF</span>
+                <span className="text-white font-bold text-lg">TN</span>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">TaskFlow</h1>
+                <h1 className="text-2xl font-bold text-gray-900">TaskNest</h1>
                 <p className="text-gray-600">Project Management Board</p>
               </div>
             </div>
