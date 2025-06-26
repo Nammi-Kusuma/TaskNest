@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Calendar, User, MoreVertical, Edit2, Trash2, Grid3X3, List, CheckSquare, Users, FolderOpen } from 'lucide-react';
+import { Plus, Calendar, User, MoreVertical, Edit2, Trash2, Grid3X3, List, CheckSquare, Users, FolderOpen, BarChart3, UserCheck } from 'lucide-react';
 import { Board } from '../types';
 import { formatDateTime } from '../utils/helpers';
 import { CreateBoardModal } from './CreateBoardModal';
@@ -13,6 +13,8 @@ interface BoardViewProps {
   onEditBoard: (boardId: string, updates: Partial<Board>) => void;
   onDeleteBoard: (boardId: string) => void;
   onSelectBoard: (boardId: string) => void;
+  onOpenManagerDashboard: () => void;
+  onOpenEmployeeDashboard: () => void;
   currentUser: any;
 }
 
@@ -24,6 +26,8 @@ export const BoardView: React.FC<BoardViewProps> = ({
   onEditBoard,
   onDeleteBoard,
   onSelectBoard,
+  onOpenManagerDashboard,
+  onOpenEmployeeDashboard,
   currentUser
 }) => {
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -67,17 +71,33 @@ export const BoardView: React.FC<BoardViewProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">TN</span>
+                <span className="text-white font-bold text-lg">TF</span>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">TaskNest</h1>
+                <h1 className="text-2xl font-bold text-gray-900">TaskFlow</h1>
                 <p className="text-gray-600">Project Management Board</p>
               </div>
             </div>
-            <button className="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors font-medium">
-              <FolderOpen className="w-4 h-4 inline mr-2" />
-              Boards
-            </button>
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={onOpenManagerDashboard}
+                className="flex items-center gap-2 px-4 py-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors font-medium"
+              >
+                <BarChart3 className="w-4 h-4" />
+                Manager Dashboard
+              </button>
+              <button 
+                onClick={onOpenEmployeeDashboard}
+                className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors font-medium"
+              >
+                <UserCheck className="w-4 h-4" />
+                My Dashboard
+              </button>
+              <button className="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors font-medium">
+                <FolderOpen className="w-4 h-4 inline mr-2" />
+                Boards
+              </button>
+            </div>
           </div>
         </div>
       </div>

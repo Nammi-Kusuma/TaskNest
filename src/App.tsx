@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { useTaskBoard } from './hooks/useTaskBoard';
 import { BoardView } from './components/BoardView';
 import { BoardDetail } from './components/BoardDetail';
+import { ManagerDashboard } from './pages/ManagerDashboard';
+import { EmployeeDashboard } from './pages/EmployeeDashboard';
+
+type ViewMode = 'boards' | 'board-detail' | 'manager-dashboard' | 'employee-dashboard';
 
 function App() {
+  const [viewMode, setViewMode] = useState<ViewMode>('boards');
   const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
   
   const {
@@ -35,7 +40,40 @@ function App() {
   const totalTasks = tasks.length;
   const totalUsers = users.length;
 
-  if (selectedBoard) {
+  const handleSelectBoard = (boardId: string) => {
+    setSelectedBoardId(boardId);
+    setViewMode('board-detail');
+  };
+
+  const handleBackToBoards = () => {
+    setSelectedBoardId(null);
+    setViewMode('boards');
+  };
+
+  const handleOpenManagerDashboard = () => {
+    setViewMode('manager-dashboard');
+  };
+
+  const handleOpenEmployeeDashboard = () => {
+    setViewMode('employee-dashboard');
+  };
+
+  if (viewMode === 'manager-dashboard') {
+    return <ManagerDashboard onBack={handleBackToBoards} />;
+  }
+
+  if (viewMode === 'employee-dashboard') {
+    return (
+      <EmployeeDashboard 
+        onBack={handleBackToBoards}
+        tasks={tasks}
+        users={users}
+        currentUser={currentUser}
+      />
+    );
+  }
+
+  if (viewMode === 'board-detail' && selectedBoard) {
     return (
       <BoardDetail
         board={selectedBoard}
@@ -43,7 +81,7 @@ function App() {
         tasks={tasks}
         users={users}
         filters={filters}
-        onBack={() => setSelectedBoardId(null)}
+        onBack={handleBackToBoards}
         onCreateColumn={createColumn}
         onEditColumn={updateColumn}
         onDeleteColumn={deleteColumn}
@@ -65,7 +103,9 @@ function App() {
       onCreateBoard={createBoard}
       onEditBoard={updateBoard}
       onDeleteBoard={deleteBoard}
-      onSelectBoard={setSelectedBoardId}
+      onSelectBoard={handleSelectBoard}
+      onOpenManagerDashboard={handleOpenManagerDashboard}
+      onOpenEmployeeDashboard={handleOpenEmployeeDashboard}
       currentUser={currentUser}
     />
   );
